@@ -32,6 +32,7 @@ input.search-bar{
 }
 
 .card {
+    display: flex;
     background: #000000d0 ;
     color:white;
     padding: 2em;
@@ -89,14 +90,7 @@ text-transform: capitalize;
     justify-content: left;
 }
 
-.favorite{
-    margin: 1em;
-    height: 2.5em;
-    width: 2.5em;
-}
-
-
-#favplaces {
+.favplaces {
     margin-top: 3px;
     height: 2.7em;
     width: 7em;
@@ -105,3 +99,16 @@ text-transform: capitalize;
     outline: none;
     cursor: pointer;
 }
+
+.column1 {
+    width: 75%;
+}
+
+.column2 {
+    width: 25%;
+}
+
+.favorite{
+    padding: 0.6em;
+}
+

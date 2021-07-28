@@ -1,3 +1,4 @@
+
 let fav = [];
 let weather = {
     "apiKey": "6433f9664c642a6cf5a67493ce303e5d",
@@ -9,8 +10,7 @@ let weather = {
         .then((data)=> this.displayWeather(data))
         .catch ((e) => {
           alert("Vstup neni validni")
-        })
-        
+        }) 
     },
     displayWeather: function(data){
         const {name} = data;
@@ -27,7 +27,8 @@ let weather = {
         document.querySelector(".wind").innerText = "Wind speed: " + speed + "km/h";
         document.body.style.backgroundImage = "url('https://source.unsplash.com/1920x1080/?" + name + "')"
         document.getElementById("btnAdd").style.display = "block";
-        document.getElementById("btnDel").style.display = "block";     
+        document.getElementById("btnDel").style.display = "block";
+        document.getElementById("WordToDel").value = name;
     },
     search: function() {
         this.fetchWeather(document.querySelector(".search-bar").value);
@@ -57,26 +58,35 @@ document.querySelector(".search-bar").addEventListener("keyup",function()
 
 
 buttonAdd.onclick = function (){
-    var favplace = document.querySelector(".search-bar").value;
-    if(favplace == ""){
-        return;
+  var favplace = document.querySelector(".city").innerText;
+  if(favplace == ""){
+      return;
+  }
+  var exists = false;
+  Array.from(document.getElementsByClassName("favplaces")).forEach((element) => {
+      if (element.innerText === favplace) {
+        exists = true;
+      }
     }
+  );
+  if (!exists) {
     if(fav.length == 10){
-        alert("Nelze mít víc jak 10 oblíbených míst!");
+      alert("Nelze mít víc jak 10 oblíbených míst!");
+    }
+    else{
+      if (fav.indexOf(favplace) === -1) {
+        fav.push(favplace);
+        localStorage.setItem("favorite", JSON.stringify(fav));
+        document.querySelector(".city").style.color = "#ffb925";
+        showFavPlaces();
+        console.log(localStorage);
       }
-      else{
-        if (fav.indexOf(favplace) === -1) {
-          fav.push(favplace);
-          localStorage.setItem("favorite", JSON.stringify(fav));
-          document.querySelector(".city").style.color = "#ffb925";
-          showFavPlaces();
-          console.log(localStorage);
-        }
-      }
+    }
+  }
 }
 
 buttonDel.onclick = function (){
-    var favplace = document.querySelector(".search-bar").value;
+    var favplace = document.querySelector(".city").innerText;
     if(favplace == ""){
        return;
     }
@@ -96,7 +106,7 @@ buttonDel.onclick = function (){
 function showFavPlaces(){
       string = "";
       for (var i = 0; i < fav.length; i++) {
-        string += `<input type="button" id="favplaces" onclick="weather.fetchWeather(this.value)" value="${fav[i]}" ></input><br>`;
+        string += `<input type="button" class="favplaces" onclick="weather.fetchWeather(this.value)" value="${fav[i]}" ></input><br>`;
       }
       document.getElementById('favorite-bar').innerHTML = string;
   }
