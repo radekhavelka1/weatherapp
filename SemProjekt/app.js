@@ -1,4 +1,3 @@
-
 let fav = [];
 let weather = {
     "apiKey": "6433f9664c642a6cf5a67493ce303e5d",
